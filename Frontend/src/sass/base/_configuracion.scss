@@ -1,0 +1,21 @@
+// BASES UNIVERSALES
+@use './variables' as *;
+
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    font-family: $fuentePrincipal;
+}
+
+li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}

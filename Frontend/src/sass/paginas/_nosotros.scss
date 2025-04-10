@@ -1,0 +1,282 @@
+@use './../base/variables' as *;
+
+.nosotros-seccion {
+
+    height: 15rem;
+    background-image: url('/imagenes/nosotros.webp');
+    background-position: top;
+    background-size: cover;
+
+
+    @media (min-width: $mediano) {
+        height: 28rem;
+    }
+
+    .nosotros-seccion__contenedor {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-content: center;
+        align-items: center;
+        justify-content: center;
+        background-color: #0000009d;
+
+        @media (min-width: $grande) {
+            grid-template-columns: 1.5fr 1fr;
+        }
+    }
+
+    &__contenido {
+
+        color: $claro;
+        text-align: center;
+        width: 80%;
+        padding: 1rem;
+        margin: auto;
+        font-weight: 500;
+
+        h2 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+
+            @media (min-width: $mediano) {
+                font-size: 5rem;
+            }
+        }
+
+        p {
+            display: none;
+            font-size: 1rem;
+
+            @media (min-width: $grande) {
+                display: block;
+            }
+        }
+    }
+}
+
+.nosotros-MisionVision {
+    text-align: center;
+    margin: 2rem 1rem;
+
+    h2 {
+        margin-bottom: 2rem;
+        font-size: 2rem;
+
+        @media (min-width: $mediano) {
+            font-size: 2.5rem;
+        }
+    }
+
+    .nosotros-tarjetas {
+        width: 80%;
+        margin: auto;
+        display: grid;
+        gap: 0.8rem;
+        position: relative;
+
+
+        @media (min-width: $mediano) {
+            width: 90%;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: center;
+            line-height: 1.6;
+        }
+
+        .nosotros-tarjeta {
+
+            padding: 1.8rem;
+            border-radius: 1rem;
+            box-shadow: 0rem 0.25rem 0.8rem rgba(0, 0, 0, 0.2);
+
+            p {
+                font-size: 0.8rem;
+
+                @media (min-width: $grande) {
+                    font-size: 1rem;
+                }
+            }
+
+            @media (min-width: $mediano) {
+
+                padding: 2.8rem;
+                font-size: 1rem;
+            }
+
+        }
+
+        .mision {
+            background-color: #f3efef;
+            z-index: 0;
+            @media (min-width: $grande) {
+                height: 25rem;
+            }
+        }
+
+        // src/styles/MissionVision.scss
+        .vision {
+            background-color: $colorPrincipal;
+            color: #fff;
+            z-index: 2;
+
+            @media (min-width: $grande) {
+                margin-top: 3rem;
+                margin-left: -3rem;
+            }
+        }
+    }
+}
+
+// Fin sección Misión y Visión
+// Inicio sección Proveedores
+
+.nosotros-proveedores {
+    background-color: $colorSecundario;
+    color: #fff;
+    padding: 2rem;
+    margin-top: 4rem ;
+    text-align: center;
+    font-weight: 500;
+
+
+    .nosotros-proveedoresGrid {
+        display: grid;
+        justify-items: center;
+        grid-template-columns: 1fr;
+        align-items: center;
+        gap: 0.625rem;
+
+        @media (min-width: $mediano) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .nosotros-texto {
+            grid-column: 1 / 2;
+            text-align: left;
+            font-size: 2.3rem;
+            padding-left: 1.25rem;
+        }
+
+        .nosotros-proveedoresContenedor {
+
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: repeat(3, 1fr);
+
+            @media (min-width: $mediano) {
+                grid-column: 2/5;
+                gap: 3rem;
+            }
+
+            @media (min-width: $grande) {
+                gap: 6rem;
+            }
+        }
+
+        .circle {
+            width: 5.6rem;
+            height: 5.6rem;
+            border-radius: 50%;
+            background-color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.875rem;
+
+            @media (min-width: $mediano) {
+                width: 7rem;
+                height: 7rem;
+
+            }
+
+            @media (min-width: $grande) {
+                width: 10rem;
+                height: 10rem;
+
+            }
+        }
+    }
+}
+
+// Fin sección Proveedores
+// Inicio sección Formulario
+
+.formulario {
+    background-image: url('/imagenes/banner.webp');
+    background-attachment: fixed;
+    justify-items: center;
+    align-items: center;
+
+    .formulario-contenido{
+        padding: 2rem 0;
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff9d;
+    }
+}
+
+.contact-form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    background-color: #e2e2e2;
+    padding: 2rem;
+    color: $oscuro;
+    border-radius: 1rem;
+    width: 80%;
+    margin: 2rem auto;
+
+    @media (min-width: $mediano) {
+        width: 50%;
+    }
+
+    .formulario-leyenda {
+        font-weight: bold;
+    }
+
+    label {
+        font-size: 1.2rem;
+
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: none;
+        font-size: 1rem;
+    }
+
+    textarea {
+        resize: none;
+        height: 5rem;
+    }
+
+    .error {
+        font-size: 0.9rem;
+        color: red;
+    }
+
+    button {
+        width: 50%;
+        margin-top: 1rem;
+        padding: 1rem;
+        background-color: $colorSecundario;
+        color: white;
+        text-transform: uppercase;
+        font-weight: 500;
+        border-radius: 1rem;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $colorPrincipal;
+        }
+    }
+}

@@ -1,0 +1,20 @@
+//PLANTILLAS
+
+@use './plantillas/cabecera';
+@use './plantillas/navegacion';
+@use './plantillas/footer';
+
+//COMPONENTES
+@use './componentes/heroPrincipal';
+@use './componentes/cardCategoria';
+@use './componentes/cardProducto';
+@use './componentes/itemProducto';
+//BASE Y VARIABLES
+@use './base/configuracion';
+
+//PAGINAS
+@use './paginas/index';
+@use './paginas/productos';
+@use './paginas/garantias';
+@use './paginas/realizarPedido';
+@use './paginas/nosotros'
