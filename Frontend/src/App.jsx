@@ -5,6 +5,10 @@ import Productos from "./paginas/Productos.jsx"
 import Nosotros from "./paginas/Nosotros.jsx"
 import Garantias from "./paginas/Garantias.jsx"
 import RealizarPedido from "./paginas/RealizarPedido.jsx"
+import Soporte from "./paginas/Soporte.jsx";
+
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -14,6 +18,8 @@ function App() {
         <Route path="/nosotros" element={<Nosotros/>}/>
         <Route path="/garantias" element={<Garantias/>}/>
         <Route path="/realizarPedido" element={<RealizarPedido/>}/>
+        <Route path="/soporte" element={<Soporte />} />
+
             
         
       </Routes>

@@ -1,0 +1,57 @@
+.soporte-wrapper {
+  padding: 2rem;
+  text-align: center;
+  background-color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.soporte-titulo {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.soporte-busqueda {
+  padding: 0.6rem 1rem;
+  width: 60%;
+  max-width: 500px;
+  border: none;
+  background-color: #ddd;
+  border-radius: 20px;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+.soporte-tabla {
+  margin: 0 auto;
+  border-collapse: collapse;
+  width: 90%;
+  max-width: 1000px;
+}
+
+.soporte-tabla th,
+.soporte-tabla td {
+  border: 3px solid black;
+  padding: 0.8rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.soporte-botones {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.soporte-botones button {
+  background-color: #d3d3d3;
+  border: none;
+  padding: 0.7rem 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #bfbfbf;
+  }
+}
