@@ -13,8 +13,8 @@ const router = Router();
 // Ruta pública (no necesita autenticación)
 router.post('/', createMessage);
 // Rutas protegidas
-router.get('/', autRequerida, getAllMessages);
-router.get('/:id', autRequerida, getMessageById);
-router.delete('/:id', autRequerida, deleteMessage);
+router.get('/', getAllMessages);
+router.get('/:id', getMessageById);
+router.delete('/:id', deleteMessage);
 
 export default router;
