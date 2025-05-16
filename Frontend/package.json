@@ -11,8 +11,12 @@
     "postinstall": "flowbite-react patch"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@tailwindcss/vite": "^4.1.6",
     "flowbite-react": "^0.11.7",
+=======
+    "axios": "^1.9.0",
+>>>>>>> origin/main
     "pexels": "^1.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

@@ -6,6 +6,24 @@ const Soporte = () => {
   const [mensajes, setMensajes] = useState([]);
   const [error, setError] = useState('');
 
+  const eliminarMensaje = async (id) => {
+  try {
+    const res = await fetch(`http://localhost:4000/api/soporte/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (!res.ok) {
+      throw new Error('No se pudo eliminar el mensaje');
+    }
+
+    // Filtrar el mensaje eliminado de la lista actual
+    setMensajes((prevMensajes) => prevMensajes.filter((msg) => msg._id !== id));
+    setError('');
+  } catch (err) {
+    setError(err.message);
+  }
+};
+
   const buscarTodos = async () => {
     try {
       const res = await fetch('http://localhost:4000/api/soporte');
@@ -70,19 +88,24 @@ const Soporte = () => {
         </thead>
         <tbody>
           {mensajes.length > 0 ? (
-            mensajes.map((msg) => (
-              <tr key={msg._id}>
+            mensajes.map((msg, index) => (
+              <tr key={msg._id} style={{ "--i": index }}>
                 <td>{msg._id}</td>
                 <td>{msg.nombre}</td>
                 <td>{msg.correo}</td>
                 <td>{msg.ciudad}</td>
                 <td>{msg.direccion}</td>
                 <td>{msg.mensaje}</td>
+                <td>
+                  <button onClick={() => eliminarMensaje(msg._id)} className="btn-eliminar">
+                    Eliminar
+                  </button>
+                </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="6">No hay resultados</td>
+              <td colSpan="7">No hay resultados</td>
             </tr>
           )}
         </tbody>

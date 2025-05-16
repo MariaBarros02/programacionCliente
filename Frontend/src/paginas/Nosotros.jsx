@@ -3,6 +3,8 @@ import Cabecera from "../plantillas/Cabecera"
 import Navegacion from "../plantillas/Navegacion";
 import HeroPrincipal from "../componentes/HeroPrincipal"
 import Footer from "../plantillas/Footer"
+import axios from 'axios';
+
 
 const Nosotros = () => {
   const [formularioInfo, setFormularioInfo] = useState({
@@ -75,12 +77,32 @@ const Nosotros = () => {
   };
 
 
-  const enviarFormulario = (e) => {
+  const enviarFormulario = async (e) => {
     e.preventDefault();
-    if (validar()) {
-      console.log('Formulario enviado:', formularioInfo);
+
+    if (!validar()) return;
+
+    try {
+      const respuesta = await axios.post('http://localhost:4000/api/soporte', formularioInfo);
+
+      console.log('Mensaje guardado correctamente:', respuesta.data);
+
+      alert('¡Gracias! Tu mensaje fue enviado con éxito.');
+      setFormularioInfo({
+        nombre: '',
+        correo: '',
+        direccion: '',
+        ciudad: '',
+        telefono: '',
+        mensaje: '',
+      });
+      setErrores({});
+    } catch (error) {
+      console.error('Error al enviar el formulario:', error);
+      alert('Ocurrió un error al enviar tu mensaje. Intenta nuevamente.');
     }
   };
+
   return (
     <>
       <Cabecera />
