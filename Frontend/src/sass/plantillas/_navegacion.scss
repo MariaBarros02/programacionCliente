@@ -77,16 +77,18 @@
 
     div .navegacion-iconoCarrito {
         color: $colorSecundario;
+        
     }
 }
 
 //Estilos carrito de compras
 .navegacion-carritoContenedor {
+    display: flex;
+    align-items: center;
     .navegacion-iconoCarrito {
         font-size: 0.8rem;
         margin-left: 2rem;
         color: $claro;
-
         @media (min-width: $mediano) {
             font-size: 1.5rem;
         }
@@ -202,6 +204,7 @@ table{
     .navegacion-carritoEncabezado {
         font-weight: bold;
         .cantidad{
+            
             text-align: center;
         }
         .subtotal{
@@ -226,10 +229,11 @@ table{
         .input-cantidadCarrito{
             margin: auto;
             width: 5rem;
+
             
             input{
                 border-radius: 0.2rem;
-                border: 1px solid #8f8e8e;
+                border: none;
                 padding: 0.5rem;
                 width: 2rem;
                 -moz-appearance: textfield;

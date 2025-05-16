@@ -121,6 +121,7 @@ const Navegacion = () => {
                                 <button onClick={() => manejarCambioCantidad(index, producto.Cantidad-1)}>-</button>
                                 <input
                                   type="number"
+                                  disabled
                                   value={producto.Cantidad}
                                   onChange={(e) => manejarCambioCantidad(index, parseInt(e.target.value, 10) || 0)} // Manejamos el cambio de cantidad
                                 />

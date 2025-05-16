@@ -8,9 +8,10 @@
         text-align: center;
 
         h2 {
-
+            font-weight: bold;
             @media (min-width: $mediano) {
                 font-size: 2rem;
+
 
             }
 
@@ -46,7 +47,8 @@
         .garantias-contenedor_pasos {
             padding: 2rem 1rem;
             border: solid 1px #cacaca;
-
+            
+          
             @media (min-width: $mediano) {
 
                 width: 75%;
@@ -62,6 +64,7 @@
 
             .garantias-contenedor_icono {
                 font-size: 3rem;
+                margin: auto;
             }
 
             p {
@@ -98,6 +101,7 @@
         text-transform: uppercase;
         color: $colorSecundario;
         margin: 2rem;
+        font-weight: bold;
 
         @media (min-width: $mediano) {
             font-size: 2rem;
