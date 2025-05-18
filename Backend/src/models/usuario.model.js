@@ -42,6 +42,10 @@ const usuarioSchema = new mongoose.Schema({
 
     },
 
+    rol: {
+        type:String,
+        default: "user"
+    },
     token: {
         type: String,
         default: null

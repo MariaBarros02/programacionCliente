@@ -138,7 +138,7 @@ export const ingresar = async (req, res) => {
         const usuarioExistente = await Usuario.findOne({ correo })
         if (!usuarioExistente) return res.status(400).json({ message: "Usuario no encontrado" })
 
-        if (!usuarioExistente.confirmado) return res.status(400).json({ message: "Usuario sin confirmar" })
+        // if (!usuarioExistente.confirmado) return res.status(400).json({ message: "Usuario sin confirmar" })
 
         const coincidencia = await bcrypt.compare(contrasena, usuarioExistente.contrasena)
         if (!coincidencia) {
@@ -155,6 +155,7 @@ export const ingresar = async (req, res) => {
             apellidos: usuarioExistente.primerApellido + " " + usuarioExistente.segundoApellido,
             correo: usuarioExistente.correo,
             celular: usuarioExistente.celular,
+            rol: usuarioExistente.rol,
             fechaCreacion: usuarioExistente.createdAt,
             fechaActualizacion: usuarioExistente.updatedAt
         })
@@ -165,8 +166,13 @@ export const ingresar = async (req, res) => {
 }
 
 export const salir = (req, res) => {
-    res.cookie("token", "", { expires: new Date(0) })
 
+    res.cookie("token", "", {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: false,
+        expires: new Date(0),
+    });
     return res.sendStatus(200)
 }
 
@@ -181,6 +187,7 @@ export const perfil = async (req, res) => {
         apellidos: usuarioEncontrado.primerApellido + " " + usuarioEncontrado.segundoApellido,
         correo: usuarioEncontrado.correo,
         celular: usuarioEncontrado.celular,
+        rol: usuarioEncontrado.rol,
         fechaCreacion: usuarioEncontrado.createdAt,
         fechaActualizacion: usuarioEncontrado.updatedAt
     });

@@ -14,7 +14,7 @@
     z-index: -1;
   }
   padding: 2rem;
-  max-width: 1200px;
+  padding-bottom: 10rem;
   margin: 0 auto;
   font-family: 'Segoe UI', sans-serif;
   background-color: #f8f9fa;
@@ -93,6 +93,7 @@
 
 .soporte-botones button {
   background-color: #ff7d1f;
+  margin-bottom: 1rem;
   color: white;
   border: none;
   padding: 0.7rem 1.5rem;
@@ -103,7 +104,7 @@
 }
 
 .soporte-botones button:hover {
-  background-color: #ffaa6e;
+  background-color: #e76406;
   transform: scale(1.05);
 }
 
