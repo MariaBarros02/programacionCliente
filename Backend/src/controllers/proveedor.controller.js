@@ -3,6 +3,9 @@ import fs from 'fs'
 import { fileURLToPath } from "url";
 import path from "path";
 
+const __nombreArchivo = fileURLToPath(import.meta.url);
+const __directorioArchivo = path.dirname(__nombreArchivo);
+
 export const obtenerProveedores = async (req, res) => {
     try {
 
@@ -43,6 +46,7 @@ export const actualizarProveedor = async (req, res) => {
         const proveedorActualizado = await Proveedor.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
         })
+        console.log(req.body)
         const proveedorGuardado = await proveedorActualizado.save();
         res.json(proveedorGuardado);
 
@@ -55,6 +59,7 @@ export const actualizarProveedor = async (req, res) => {
 export const eliminarProveedor = async (req, res) => {
 
     try {
+        
         const proveedor = await Proveedor.findByIdAndDelete(req.params.id);
         if (!proveedor) return res.status(404).json({ menssage: "Proveedor no encontrado" })
 

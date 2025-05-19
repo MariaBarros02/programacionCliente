@@ -65,7 +65,7 @@ const IniciarSesion = () => {
         <>
             <Cabecera />
             <div className='fondoPersonalizado '>
-                <div className=' flex justify-center items-center '>
+                <div className=' flex justify-center items-center fondoPersonalizado_contenido '>
                     <div className='pt-10 pb-20'>
                         <div className='flex items-center my-5'>
                             <Link to="/"><BsArrowLeftCircle className='text-lime-600  text-3xl mr-4' /></Link>

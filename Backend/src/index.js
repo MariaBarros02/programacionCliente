@@ -6,9 +6,14 @@ import autRoutes from './routes/aut.routes.js'
 import proveedorRoutes from './routes/proveedor.routes.js'
 import soporteRoutes from './routes/soporteRoutes.js'
 import cors from 'cors';
+import path from 'path'
 
 
 
+import { fileURLToPath } from "url";
+
+const __nombreArchivo = fileURLToPath(import.meta.url);
+const __directorioArchivo = path.dirname(__nombreArchivo);
 const app = express();
 
 app.use(cookieParser());
@@ -18,6 +23,7 @@ app.use(cors({
 }));
 app.use(morgan('dev'));
 app.use(express.json());
+app.use('/uploads', express.static(path.join(__directorioArchivo, 'public/uploads')))
 app.use('/api', autRoutes)
 app.use('/api', proveedorRoutes)
 app.use('/api/soporte', soporteRoutes)

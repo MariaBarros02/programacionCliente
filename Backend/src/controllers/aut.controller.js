@@ -145,7 +145,7 @@ export const ingresar = async (req, res) => {
             return res.status(400).json({ message: "Contraseña incorrecta" })
         }
 
-        const token = await crearAccesoToken({ id: usuarioExistente._id })
+        const token = await crearAccesoToken({ id: usuarioExistente._id , rol: usuarioExistente.rol})
 
         res.cookie("token", token)
 

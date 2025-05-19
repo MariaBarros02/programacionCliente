@@ -135,7 +135,7 @@ const Registrarse = () => {
               <h1 className='text-5xl font-bold '>Crear Cuenta</h1>
             </div>
 
-            <form className="max-w-md mx-auto bg-white py-10 px-5 rounded-xl shadow-2xl" onSubmit={handleSubmit}>
+            <form className="w-full mx-auto bg-white py-10 px-5 rounded-xl shadow-2xl" onSubmit={handleSubmit}>
               <div className="grid md:grid-cols-2 md:gap-6">
                 <div className="relative z-0 w-full mb-5 group">
                   <input

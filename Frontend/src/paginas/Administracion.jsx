@@ -49,24 +49,27 @@ const Administracion = () => {
     <>
       <Cabecera />
       <div className='fondoPersonalizado h-full'>
-        
-        <div className='w-10/12 md:w-8/12 m-auto flex flex-col items-center justify-center pb-10'>
-          <Link className=' my-5' to="/"><FaArrowCircleLeft className="text-orange-500 text-5xl"/></Link>
-          {entradas.map((entrada, index) => {
-            const Icono = iconos[entrada.icono];
-            return (
-              <Link to={`/administracion${entrada.link}`} className='block bg-white shadow-2xl p-4 rounded-2xl  hover:bg-gray-100 mb-8 flex items-center' key={index}>
-                <Icono className='text-lime-600 text-8xl mr-4 md:text-6xl' />
-                <div>
-                  <h2 className='font-bold'>{entrada.titulo}</h2>
-                  <p className='text-xs '>{entrada.descripcion}</p>
-                </div>
-              </Link>
-            );
-          })}
+        <div className='fondoPersonalizado_contenido'> 
+          <div className='w-10/12 md:w-8/12 m-auto flex flex-col items-center justify-center pb-10'>
+            <Link className=' my-5' to="/"><FaArrowCircleLeft className="text-orange-500 text-5xl" /></Link>
+            {entradas.map((entrada, index) => {
+              const Icono = iconos[entrada.icono];
+              return (
+                <Link to={`/administracion${entrada.link}`} className='block bg-white shadow-2xl p-4 rounded-2xl border-3 border-white hover:border-lime-600 hover:scale-110 transition-transform duration-300 mb-8 flex items-center' key={index}>
+                  <Icono className='text-lime-600 text-8xl mr-4 md:text-6xl' />
+                  <div>
+                    <h2 className='font-bold'>{entrada.titulo}</h2>
+                    <p className='text-xs '>{entrada.descripcion}</p>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
         </div>
+
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };

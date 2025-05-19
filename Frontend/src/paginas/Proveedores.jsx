@@ -7,29 +7,36 @@ import Alerta from '../componentes/Alerta'
 import { Button, Checkbox, Label, TextInput, FileInput, HelperText } from "flowbite-react";
 import { useEffect } from 'react'
 
+import { Breadcrumb, BreadcrumbItem } from 'flowbite-react';
+import { HiHome } from "react-icons/hi";
 
 const categorias = ["frutas", "verduras", "pulpas de fruta", "carnes", "huevos"]
+const estadoInicial = {
+    nombreEmpresa: '',
+    departamento: "",
+    ciudad: '',
+    direccion: '',
+    nombreAdministrador: '',
+    correo: '',
+    telefono: '',
+    categorias: []
+};
+
 const Proveedores = () => {
     const [vistaFormulario, setVistaFormulario] = useState(false);
     const [alerta, setAlerta] = useState({})
-    const [dataForm, setDataForm] = useState({
-        nombreEmpresa: '',
-        departamento: "",
-        ciudad: '',
-        direccion: '',
-        nombreAdministrador: '',
-        correo: '',
-        telefono: '',
-        categorias: []
-    });
+    const [dataForm, setDataForm] = useState(estadoInicial);
     const fileInputRef = useRef(null);
 
     const [logoEmpresa, setLogoEmpresa] = useState('');
     const [proveedores, setProveedores] = useState([]);
 
+    const [modoEdicion, setModoEdicion] = useState(false);
+    const [proveedorId, setProveedorId] = useState(null);
+
+
     useEffect(() => {
         cargarProveedores();
-        console.log(proveedores)
     }, [])
 
     const cargarProveedores = async () => {
@@ -37,10 +44,21 @@ const Proveedores = () => {
             const response = await axios.get('http://localhost:4000/api/proveedores');
             setProveedores(response.data);
         } catch (error) {
-
+            setAlerta({ msg: "Error al cargar los proveedores", error: true });
         }
     }
 
+
+    const eliminarProveedor = async (id) => {
+        try {
+            const response = await axios.delete(`http://localhost:4000/api/proveedor/${id}`, {
+                withCredentials: true
+            })
+            cargarProveedores();
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const handleChange = (e) => {
 
@@ -49,13 +67,11 @@ const Proveedores = () => {
             ...prev,
             [id]: value
         }))
-        console.log(dataForm)
     }
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setLogoEmpresa(file);
-        console.log(logoEmpresa)
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -66,11 +82,6 @@ const Proveedores = () => {
             return value === undefined || value === null;
         });
 
-        if (!logoEmpresa) {
-            setAlerta({ msg: "El logo es obligatorio", error: true });
-            return;
-        }
-
         if (hayCamposVacios) {
             setAlerta({ msg: "Todos los campos son obligatorios", error: true });
             return;
@@ -78,7 +89,9 @@ const Proveedores = () => {
 
         try {
             const formData = new FormData();
-            formData.append('logoEmpresa', logoEmpresa);
+            if (logoEmpresa) {
+                formData.append('logoEmpresa', logoEmpresa);
+            }
 
             for (const key in dataForm) {
                 if (Array.isArray(dataForm[key])) {
@@ -88,39 +101,51 @@ const Proveedores = () => {
                 }
             }
 
-            const response = await axios.post('http://localhost:4000/api/proveedores', formData, { withCredentials: true });
-            const resultado = response.data;
-            console.log("Respuesta del servidor:", resultado);
 
-            setAlerta({ msg: "Formulario enviado correctamente", error: false });
+            if (modoEdicion) {
+                await axios.put(`http://localhost:4000/api/proveedor/${proveedorId}`, formData, {
+                    withCredentials: true,
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+                setAlerta({ msg: "Proveedor actualizado correctamente", error: false });
+            } else {
+                await axios.post('http://localhost:4000/api/proveedores', formData, {
+                    withCredentials: true,
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+                setAlerta({ msg: "Proveedor creado correctamente", error: false });
+            }
 
+            // Reset
+            setDataForm({
+                nombreEmpresa: '',
+                departamento: "",
+                ciudad: '',
+                direccion: '',
+                nombreAdministrador: '',
+                correo: '',
+                telefono: '',
+                categorias: []
+            });
+            setLogoEmpresa("");
+            setModoEdicion(false);
+            setProveedorId(null);
+            if (fileInputRef.current) fileInputRef.current.value = '';
+            cargarProveedores();
         } catch (error) {
             setAlerta({ msg: "Error al enviar el formulario", error: true });
-            console.log(error)
-
+            console.error(error);
         }
 
         setTimeout(() => {
             setAlerta({});
         }, 3000);
-
-        setDataForm({
-            nombreEmpresa: '',
-            logoEmpresa: '',
-            departamento: "",
-            ciudad: '',
-            direccion: '',
-            nombreAdministrador: '',
-            correo: '',
-            telefono: '',
-            categorias: []
-        })
-        setLogoEmpresa("");
-        if (fileInputRef.current) {
-            fileInputRef.current.value = '';
-        }
-        cargarProveedores();
     };
+
 
     const { msg } = alerta
 
@@ -129,7 +154,13 @@ const Proveedores = () => {
             <Cabecera />
             <div className='grid md:grid-cols-2 '>
                 <div className='fondoPersonalizado py-5 pb-10' >
-
+                    <Breadcrumb className='ml-5 mb-3' aria-label="Default breadcrumb example">
+                        <BreadcrumbItem href="/" icon={HiHome}>
+                            Inicio
+                        </BreadcrumbItem>
+                        <BreadcrumbItem href="/administracion">Administración</BreadcrumbItem>
+                        <BreadcrumbItem>Proveedores</BreadcrumbItem>
+                    </Breadcrumb>
 
                     <div className='text-center'>
                         <h2 className='font-bold text-3xl text-orange-500'>Formulario Proveedores</h2>
@@ -223,7 +254,34 @@ const Proveedores = () => {
                         {msg && <Alerta alerta={alerta} />}
 
 
-                        <Button type="submit" color="green" className='uppercase'>Crear Proveedor</Button>
+                        <Button type="submit" color="green" className='uppercase'>
+                            {modoEdicion ? "Actualizar Proveedor" : "Crear Proveedor"}
+                        </Button>
+                        {modoEdicion && (
+                            <Button
+                                color="red"
+                                className='uppercase'
+                                onClick={() => {
+                                    setModoEdicion(false);
+                                    setProveedorId(null);
+                                    setDataForm({
+                                        nombreEmpresa: '',
+                                        departamento: "",
+                                        ciudad: '',
+                                        direccion: '',
+                                        nombreAdministrador: '',
+                                        correo: '',
+                                        telefono: '',
+                                        categorias: []
+                                    });
+                                    if (fileInputRef.current) fileInputRef.current.value = '';
+                                }}
+                            >
+                                Cancelar edición
+                            </Button>
+                        )}
+
+
                     </form>
                 </div>
                 <div className='py-5 bg-gray-50'>
@@ -233,31 +291,56 @@ const Proveedores = () => {
                     </div>
 
                     <div className='w-10/12 m-auto mt-5'>
+                        {proveedores.length === 0 ? (
+                            <p className="text-center text-gray-500">No hay proveedores registrados.</p>
+                        ) : (
+                            proveedores.map((proveedor, index) => (
+                                <div className='bg-white py-4 mb-3 px-2 shadow-2xl rounded-2xl flex items-center text-sm' key={index}>
 
-                        {
-                            proveedores.map((proveedor, index) => {
-                                <div className='bg-white py-4 px-2 shadow-2xl rounded-2xl flex items-center text-sm'>
-
-                                    <img className="h-36" src='/imagenes/proveedor1.webp' />
+                                    <img className="w-32" src={`http://localhost:4000${proveedor.logoEmpresa}`} alt='logoEmpresa' />
                                     <div className='w-full'>
                                         <div >
-                                            <p className='font-bold'>Nombre: <span className='font-normal'></span></p>
-                                            <p className='font-bold'>Dirección: <span className='font-normal'></span></p>
-                                            <p>Departamento - municipio</p>
-                                            <p className='font-bold'>Contacto: <span className='font-normal'></span></p>
-                                            <p className='font-bold'>Categorias: <span className='font-normal'></span></p>
+                                            <p className='font-bold'>Nombre: <span className='font-normal'>{proveedor.nombreEmpresa}</span></p>
+                                            <p className='font-bold'>Nombre del Administrador: <span className='font-normal'>{proveedor.nombreAdministrador}</span></p>
+                                            <p className='font-bold'>Dirección: <span className='font-normal'>{proveedor.direccion}</span></p>
+                                            <p>{proveedor.departamento} - {proveedor.ciudad}</p>
+                                            <p className='font-bold'>Contacto: <span className='font-normal'>{proveedor.correo} | {proveedor.telefono}</span></p>
+                                            <p className='font-bold'>Categorias: &nbsp;
+                                                <span className='font-normal capitalize'>
+                                                    {proveedor.categorias.join(", ")}
+                                                </span>
+                                            </p>
                                         </div>
                                         <div className='flex justify-between mt-3 w-11/12'>
-                                            <Button size='xs'>Editar</Button>
-                                            <Button color="red" size='xs'>Borrar</Button>
+                                            <Button
+                                                size='xs'
+                                                onClick={() => {
+                                                    setDataForm({
+                                                        nombreEmpresa: proveedor.nombreEmpresa,
+                                                        departamento: proveedor.departamento,
+                                                        ciudad: proveedor.ciudad,
+                                                        direccion: proveedor.direccion,
+                                                        nombreAdministrador: proveedor.nombreAdministrador,
+                                                        correo: proveedor.correo,
+                                                        telefono: proveedor.telefono,
+                                                        categorias: proveedor.categorias || []
+                                                    });
+                                                    setLogoEmpresa(""); // Vaciar para que el usuario elija si quiere cambiar
+                                                    setProveedorId(proveedor._id);
+                                                    setModoEdicion(true);
+                                                    setVistaFormulario(true); // Muestra el formulario si está oculto
+                                                }}
+                                            >
+                                                Editar
+                                            </Button>
+
+                                            <Button color="red" size='xs' onClick={e => eliminarProveedor(proveedor._id)}>Borrar</Button>
                                         </div>
 
 
                                     </div>
                                 </div>
-                            })}
-
-
+                            )))}
                     </div>
                 </div>
 
