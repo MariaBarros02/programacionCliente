@@ -145,7 +145,7 @@ export const ingresar = async (req, res) => {
             return res.status(400).json({ message: "Contraseña incorrecta" })
         }
 
-        const token = await crearAccesoToken({ id: usuarioExistente._id , rol: usuarioExistente.rol})
+        const token = await crearAccesoToken({ id: usuarioExistente._id, rol: usuarioExistente.rol })
 
         res.cookie("token", token)
 
@@ -166,30 +166,59 @@ export const ingresar = async (req, res) => {
 }
 
 export const salir = (req, res) => {
+    try {
+        res.cookie("token", "", {
+            httpOnly: true,
+            sameSite: "lax",
+            secure: false,
+            expires: new Date(0),
+        });
 
-    res.cookie("token", "", {
-        httpOnly: true,
-        sameSite: "lax",
-        secure: false,
-        expires: new Date(0),
-    });
-    return res.sendStatus(200)
+        return res.sendStatus(200)
+
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
 }
 
 export const perfil = async (req, res) => {
     const usuarioEncontrado = await Usuario.findById(req.user.id)
+    try {
+        if (!usuarioEncontrado) return res.status(400).json({ message: "Usuario NO encontrado" });
 
-    if (!usuarioEncontrado) return res.status(400).json({ message: "Usuario NO encontrado" });
+        return res.json({
+            id: usuarioEncontrado._id,
+            nombres: usuarioEncontrado.primerNombre + " " + usuarioEncontrado.segundoNombre,
+            apellidos: usuarioEncontrado.primerApellido + " " + usuarioEncontrado.segundoApellido,
+            correo: usuarioEncontrado.correo,
+            celular: usuarioEncontrado.celular,
+            rol: usuarioEncontrado.rol,
+            fechaCreacion: usuarioEncontrado.createdAt,
+            fechaActualizacion: usuarioEncontrado.updatedAt
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
 
-    return res.json({
-        id: usuarioEncontrado._id,
-        nombres: usuarioEncontrado.primerNombre + " " + usuarioEncontrado.segundoNombre,
-        apellidos: usuarioEncontrado.primerApellido + " " + usuarioEncontrado.segundoApellido,
-        correo: usuarioEncontrado.correo,
-        celular: usuarioEncontrado.celular,
-        rol: usuarioEncontrado.rol,
-        fechaCreacion: usuarioEncontrado.createdAt,
-        fechaActualizacion: usuarioEncontrado.updatedAt
-    });
+export const eliminarPerfil = async (req, res) => {
+    const usuarioEliminado = await Usuario.findByIdAndDelete(req.user.id)
+    try {
+        if (!usuarioEliminado) return res.status(400).json({ message: "Usuario NO encontrado" });
+
+        return res.json({
+            id: usuarioEncontrado._id,
+            nombres: usuarioEncontrado.primerNombre + " " + usuarioEncontrado.segundoNombre,
+            apellidos: usuarioEncontrado.primerApellido + " " + usuarioEncontrado.segundoApellido,
+            correo: usuarioEncontrado.correo,
+            celular: usuarioEncontrado.celular,
+            rol: usuarioEncontrado.rol,
+            fechaCreacion: usuarioEncontrado.createdAt,
+            fechaActualizacion: usuarioEncontrado.updatedAt
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+    
 
 }

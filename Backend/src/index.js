@@ -5,6 +5,7 @@ import { conectarDB } from './db.js';
 import autRoutes from './routes/aut.routes.js'
 import proveedorRoutes from './routes/proveedor.routes.js'
 import soporteRoutes from './routes/soporteRoutes.js'
+import usuariosRoutes from './routes/usuarios.routes.js'
 import cors from 'cors';
 import path from 'path'
 
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use('/uploads', express.static(path.join(__directorioArchivo, 'public/uploads')))
 app.use('/api', autRoutes)
 app.use('/api', proveedorRoutes)
+app.use('/api', usuariosRoutes)
 app.use('/api/soporte', soporteRoutes)
 conectarDB();
 app.listen(4000);
