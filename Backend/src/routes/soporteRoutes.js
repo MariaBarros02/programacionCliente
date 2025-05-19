@@ -7,14 +7,15 @@ import {
   } from '../controllers/soporteController.js';
 
 import { autRequerida } from '../middlewares/validarToken.js';
+import { verifyAdmin } from '../middlewares/verifyRole.js';
 
 const router = Router();
 
 // Ruta pública (no necesita autenticación)
 router.post('/', createMessage);
 // Rutas protegidas
-router.get('/',autRequerida, getAllMessages);
-router.get('/:id', getMessageById);
-router.delete('/:id', deleteMessage);
+router.get('/',autRequerida,verifyAdmin, getAllMessages);
+router.get('/:id',verifyAdmin, getMessageById);
+router.delete('/:id', verifyAdmin, deleteMessage);
 
 export default router;

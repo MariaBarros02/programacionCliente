@@ -12,7 +12,7 @@ export const obtenerUsuarios = async (req, res) => {
 
 export const eliminarUsuario = async (req, res) => {
     try {
-        const usuarioEliminado = await User.findByIdAndDelete(req.params.id);
+        const usuarioEliminado = await Usuario.findByIdAndDelete(req.params.id);
 
         if (!usuarioEliminado) {
             return res.status(404).json({ message: "Usuario no encontrado" })
@@ -23,18 +23,27 @@ export const eliminarUsuario = async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 }
-
 export const cambiarRol = async (req, res) => {
     try {
         const usuario = await Usuario.findById(req.params.id);
-        if (!usuariod) return res.status(400).json({ message: "Usuario no encontrada" });
+        if (!usuario) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
 
-        usuario.rol = !propiedad.visibilidad;
-        await propiedad.save();
+        // Alternar entre 'admin' y 'user'
+        usuario.rol = usuario.rol === 'admin' ? 'user' : 'admin';
 
-        res.json({ visibilidad: propiedad.visibilidad });
+        await usuario.save();
+
+        res.json({
+            message: `Rol actualizado a ${usuario.rol}`,
+            nuevoRol: usuario.rol
+        });
 
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({
+            message: "Error al cambiar el rol",
+            error: error.message
+        });
     }
 }

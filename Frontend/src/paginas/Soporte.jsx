@@ -19,21 +19,25 @@ const Soporte = () => {
 
   useEffect(() => { mostrarMensajes() }, [])
 
-  const mostrarMensajes = async() => {
+  const mostrarMensajes = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/soporte', {withCredentials: true});
+      const response = await axios.get('http://localhost:4000/api/soporte', { withCredentials: true });
       setMensajes(response.data);
     } catch (error) {
       setError(err.message);
     }
   }
   const eliminarMensaje = async (id) => {
+    const confirmar = confirm('¿Desea eliminar este mensaje?')
+    if (!confirmar) {
+      return
+    }
     try {
-      const response = await axios.delete(`http://localhost:4000/api/soporte/${id}`, {withCredentials: true});
-      
+      const response = await axios.delete(`http://localhost:4000/api/soporte/${id}`, { withCredentials: true });
+
       mostrarMensajes();
 
-      setAlerta({msg: 'Se ha eliminado correctamente el mensaje', error: false});
+      setAlerta({ msg: 'Se ha eliminado correctamente el mensaje', error: false });
 
       setTimeout(() => {
         setAlerta({})
@@ -44,7 +48,7 @@ const Soporte = () => {
     }
   };
 
- 
+
 
   const buscarPorID = async () => {
     if (!busqueda.trim()) {
@@ -69,7 +73,7 @@ const Soporte = () => {
     }
   };
 
-  const {msg} = alerta;
+  const { msg } = alerta;
   return (
     <>
       <Cabecera />

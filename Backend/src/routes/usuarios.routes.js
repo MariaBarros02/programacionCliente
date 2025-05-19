@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { obtenerUsuarios, eliminarUsuario, cambiarRol } from '../controllers/usuarios.controller';
-import { autRequerida } from '../middlewares/validarToken';
-import { verifyAdmin } from '../middlewares/verifyRole';
+import { obtenerUsuarios, eliminarUsuario, cambiarRol } from '../controllers/usuarios.controller.js';
+import { autRequerida } from '../middlewares/validarToken.js';
+import { verifyAdmin } from '../middlewares/verifyRole.js';
 
 const router = Router()
 

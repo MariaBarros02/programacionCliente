@@ -12,6 +12,7 @@ import { AuthProvider } from "./context/AuthContext.jsx"
 import Administracion from "./paginas/Administracion.jsx"
 import PrivateRoute from "./componentes/PrivateRoute.jsx"
 import Proveedores from "./paginas/Proveedores.jsx"
+import Usuarios from "./paginas/Usuarios.jsx"
 
 
 
@@ -33,6 +34,7 @@ function App() {
             <Route index element={<Administracion/>}/>
             <Route path="soporte" element={<Soporte/>} />
             <Route path="proveedores" element={<Proveedores/>} />
+            <Route path="usuarios" element = {<Usuarios/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

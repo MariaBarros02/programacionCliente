@@ -19,12 +19,6 @@ const iconos = {
 
 const entradas = [
   {
-    titulo: "Mi Perfil",
-    descripcion: "Administra la información personal de tu cuenta. Desde aquí puedes editar tus datos, actualizar tu contraseña y personalizar tu experiencia en la plataforma.",
-    link: "/miPerfil",
-    icono: "ImProfile"
-  },
-  {
     titulo: "Usuarios",
     descripcion: "Supervisa y gestiona los roles de todos los usuarios registrados en la página web. Ideal para mantener un control organizado sobre los permisos y accesos dentro de tu empresa.",
     link: "/usuarios",

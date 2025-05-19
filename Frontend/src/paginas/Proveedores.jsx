@@ -50,6 +50,10 @@ const Proveedores = () => {
 
 
     const eliminarProveedor = async (id) => {
+        const confirmar = confirm('¿Desea eliminar este proveedor?')
+        if (!confirmar) {
+            return
+        }
         try {
             const response = await axios.delete(`http://localhost:4000/api/proveedor/${id}`, {
                 withCredentials: true
@@ -297,7 +301,7 @@ const Proveedores = () => {
                             proveedores.map((proveedor, index) => (
                                 <div className='bg-white py-4 mb-3 px-2 shadow-2xl rounded-2xl flex items-center text-sm' key={index}>
 
-                                    <img className="w-32" src={`http://localhost:4000${proveedor.logoEmpresa}`} alt='logoEmpresa' />
+                                    <img className="w-32 rounded-full mr-2" src={`http://localhost:4000${proveedor.logoEmpresa}`} alt='logoEmpresa' />
                                     <div className='w-full'>
                                         <div >
                                             <p className='font-bold'>Nombre: <span className='font-normal'>{proveedor.nombreEmpresa}</span></p>

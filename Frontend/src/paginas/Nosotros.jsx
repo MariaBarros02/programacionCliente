@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cabecera from "../plantillas/Cabecera"
 import Navegacion from "../plantillas/Navegacion";
 import HeroPrincipal from "../componentes/HeroPrincipal"
@@ -16,7 +16,22 @@ const Nosotros = () => {
     mensaje: '',
   });
 
+  const [proveedores, setProveedores] = useState([])
+
+
   const [errores, setErrores] = useState({});
+
+  useEffect(() => { cargarProveedores() }, [])
+
+  const cargarProveedores = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/api/proveedores');
+      console.log(response.data)
+      setProveedores(response.data);
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const actualizarInformacion = (e) => {
 
@@ -152,10 +167,18 @@ const Nosotros = () => {
             <p>Nuestros Proveedores</p>
           </div>
           {/*Cambiar los circulos por imagenes */}
+
           <div className="nosotros-proveedoresContenedor">
-              <img className="circle" src="/imagenes/proveedor1.webp" alt=""/>
-              <img className="circle" src="/imagenes/proveedor2.webp" alt=""/>
-              <img className="circle" src="/imagenes/proveedor3.webp" alt=""/>
+            <div className="nosotros-proveedoresContenedor">
+              {proveedores.map((proveedor, index) => (
+                <img
+                  className="circle"
+                  src={`http://localhost:4000${proveedor.logoEmpresa}`}
+                  alt={proveedor.nombreEmpresa}
+                  key={index}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
